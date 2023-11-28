@@ -10,6 +10,7 @@ suite('Functional Tests', function() {
     test('Convert valid 10L with GET /api/convert', function (done) {
       chai
         .request(server)
+        .keepOpen()
         .get('/api/convert')
         .query({ input: '10L' })
         .end(function (err, res) {
@@ -26,6 +27,7 @@ suite('Functional Tests', function() {
     test('Convert invalid unit 32g with GET /api/convert', function (done) {
       chai
         .request(server)
+        .keepOpen()
         .get('/api/convert')
         .query({ input: '32g'})
         .end(function (err, res) {
@@ -38,6 +40,7 @@ suite('Functional Tests', function() {
     test('Convert invalid number 3/7.2/4kg with GET /api/convert', function (done) {
       chai
         .request(server)
+        .keepOpen()
         .get('/api/convert')
         .query({ input: '3/7.2/4kg'})
         .end(function (err, res) {
@@ -50,6 +53,7 @@ suite('Functional Tests', function() {
     test('Convert invalid number AND unit 3/7.2/4kilomegagram with GET /api/convert', function (done) {
       chai
         .request(server)
+        .keepOpen()
         .get('/api/convert')
         .query({ input: '3/7.2/4kilomegagram'})
         .end(function (err, res) {
@@ -62,6 +66,7 @@ suite('Functional Tests', function() {
     test('Convert no number with GET /api/convert', function (done) {
       chai
         .request(server)
+        .keepOpen()
         .get('/api/convert')
         .query({ input: 'gal'})
         .end(function (err, res) {
