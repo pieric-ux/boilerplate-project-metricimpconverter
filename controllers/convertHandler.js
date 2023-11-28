@@ -1,17 +1,54 @@
-function ConvertHandler() {
+
+function splitInputNumericString(input) {
   
-  const reg = /(gal|l|mi|km|lbs|kg)$/i;
+  const numeric = (input.match(/[\d.\/]+/g) ?? ['1'])[0];
+  const string = input.match(/[a-zA-Z]+/g)[0];
+  
+  return [numeric, string];
+}
+
+function checkDoubleFraction(numeric) {
+  const fractions = numeric.split('/');
+  if(fractions.length > 2) {
+    return undefined;
+  }
+  return numeric;
+}
+
+function ConvertHandler() {
 
   this.getNum = function(input) {
-    let result = eval(input.split(reg)[0]);
-  
-    return result;
+    const numeric = splitInputNumericString(input)[0];
+    let result = checkDoubleFraction(numeric);
+    
+    return eval(result);
   };
   
   this.getUnit = function(input) {
-    let result = input.match(reg)[0].toLowerCase();
-    if (result == 'l') result = result.toUpperCase();
-    
+    const string = splitInputNumericString(input)[1];
+    switch (string.toLowerCase()) {
+      case 'gal':
+        result = 'gal';
+        break;
+      case 'l':
+        result = 'L';
+        break;
+      case 'lbs':
+        result = 'lbs';
+        break;
+      case 'kg':
+        result = 'kg';
+        break;
+      case 'mi':
+        result = 'mi';
+        break;
+      case 'km':
+        result = 'km';
+        break;
+      default:
+        result = undefined;
+    }
+
     return result;
   };
   
